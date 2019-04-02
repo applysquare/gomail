@@ -43,6 +43,17 @@ func Send(s Sender, msg ...*Message) error {
 	return nil
 }
 
+// SendNoErasingError sends emails using the given Sender.
+func SendNoErasingError(s Sender, msg ...*Message) error {
+	for _, m := range msg {
+		if err := send(s, m); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func send(s Sender, m *Message) error {
 	from, err := m.getFrom()
 	if err != nil {
